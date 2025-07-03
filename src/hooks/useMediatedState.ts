@@ -36,8 +36,7 @@ The function setState to update the state. It must be the same as the second ele
 Essentially, the hook returns the same values as useState.
 */
 
-
-import { useState, useCallback, Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 
 interface StateMediator<S = unknown> {
   (newState: S): S;
@@ -46,7 +45,7 @@ interface StateMediator<S = unknown> {
 
 export default function useMediatedState<S = unknown>(
   mediator: StateMediator<S>,
-  initialState?: S,
+  initialState?: S
 ): [S, Dispatch<SetStateAction<S>>] {
   const [state, setState] = useState<S>(initialState);
 
@@ -54,12 +53,19 @@ export default function useMediatedState<S = unknown>(
     const argsCount = mediator.length;
     if (argsCount === 1) {
       const newState =
-        typeof valueOrUpdater === "function" ? mediator(valueOrUpdater(state)) : mediator(valueOrUpdater);
+        typeof valueOrUpdater === "function"
+          ? mediator(valueOrUpdater(state))
+          : mediator(valueOrUpdater);
       setState(newState);
     } else {
-      mediator(typeof valueOrUpdater === "function" ? valueOrUpdater(state) : valueOrUpdater, setState);
+      mediator(
+        typeof valueOrUpdater === "function"
+          ? valueOrUpdater(state)
+          : valueOrUpdater,
+        setState
+      );
     }
-  }
+  };
 
   return [state, setMediatedState];
 }

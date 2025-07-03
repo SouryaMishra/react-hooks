@@ -50,7 +50,7 @@ reset: () => void: A function to reset to the initial value as well as the value
 
 */
 
-import { ChangeEvent, FocusEvent, useState } from "react";
+import { type ChangeEvent, type FocusEvent, useState } from "react";
 
 interface UseInputValueReturn {
   value: string;
@@ -63,7 +63,7 @@ interface UseInputValueReturn {
 }
 
 export default function useInputControl(
-  initialValue: string,
+  initialValue: string
 ): UseInputValueReturn {
   const [value, setValue] = useState<string>(initialValue);
   const [dirty, setDirty] = useState<boolean>(false);
@@ -74,10 +74,10 @@ export default function useInputControl(
     setValue(e.target.value);
     setDirty(true);
     setDifferent(initialValue !== e.target.value);
-  }
+  };
 
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
-    setTouched(true)
+  const handleBlur = () => {
+    setTouched(true);
   };
 
   const reset = () => {
@@ -94,7 +94,6 @@ export default function useInputControl(
     reset,
     dirty,
     touched,
-    different
+    different,
   };
 }
-

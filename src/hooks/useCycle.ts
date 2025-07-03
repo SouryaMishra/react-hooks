@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+
 /*
 Implement a useCycle hook that cycles through a sequence of values each time its function is called.
 
